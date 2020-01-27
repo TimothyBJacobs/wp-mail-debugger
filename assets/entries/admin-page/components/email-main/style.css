@@ -1,0 +1,22 @@
+.wmd-email-main-header {
+	display: grid;
+	grid-template-columns: repeat(12, 1fr);
+	grid-template-rows: repeat(2, min-content);
+}
+
+.wmd-email-main-header__subject {
+	margin: 0;
+	grid-column: 1 / 11;
+	grid-row: 1;
+}
+
+.wmd-email-main-header__sent-at {
+	grid-column: 11 / 13;
+	grid-row: 1;
+	text-align: right;
+}
+
+.wmd-email-main-header__recipients {
+	grid-column: 1 / 9;
+	grid-row: 2;
+}

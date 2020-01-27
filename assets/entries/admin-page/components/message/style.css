@@ -1,0 +1,37 @@
+.components-tab-panel__tabs button {
+	background: transparent;
+	border: none;
+	border-radius: 0;
+	cursor: pointer;
+	padding: 10px 15px;
+	margin-left: 0;
+	font-weight: 400;
+	outline-offset: -1px;
+}
+
+.components-tab-panel__tabs button:focus {
+	color: #191e23;
+	outline: 1px solid #6c7781;
+	box-shadow: none;
+}
+
+.components-tab-panel__tabs button.is-active {
+	border-bottom: 3px solid #0081E3;
+	outline: none;
+}
+
+.wmd-message-tab--text {
+	background: white;
+	padding: 1.4em;
+	border: 1px solid #e2e4e7;
+	min-height: 150px;
+}
+
+.wmd-message-tab--text pre {
+	margin: 0;
+	overflow-x: auto;
+}
+
+.wmd-message-tab--html iframe {
+	border: 1px solid #e2e4e7;
+}

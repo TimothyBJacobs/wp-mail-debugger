@@ -1,0 +1,33 @@
+.wmd-search {
+	display: flex;
+	align-items: stretch;
+}
+
+.wmd-search > :first-child {
+	margin: 0 .25em 0 0;
+}
+
+.wmd-search > :last-child {
+	margin: 0 0 0 .25em;
+}
+
+.wmd-search > * {
+	margin: 0 .25em;
+}
+
+.wmd-search__control {
+	margin-right: 1em;
+	flex-grow: 1;
+}
+
+.wmd-search__control .components-base-control__field {
+	margin-bottom: 0;
+}
+
+.wmd-search .components-text-control__input {
+	height: 36px;
+}
+
+.wmd-search__trigger {
+	box-shadow: inset 0 0 0 1px #555d66,inset 0 0 0 2px #fff;
+}

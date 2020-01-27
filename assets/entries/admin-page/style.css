@@ -1,0 +1,20 @@
+#wpcontent,
+.auto-fold #wpcontent {
+	padding-left: 0;
+}
+
+.wmd-body {
+	max-width: 800px;
+	margin: 0 auto;
+	padding: 0 1em;
+}
+
+.wmd-body--detail {
+	max-width: none;
+}
+
+.components-icon-button.is-link:hover {
+	background-color: transparent !important;
+	color: #00a0d2 !important;
+	box-shadow: none !important;
+}

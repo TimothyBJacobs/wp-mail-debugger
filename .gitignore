@@ -1,0 +1,8 @@
+wp-cli.local.yml
+node_modules/
+vendor/
+*.sql
+*.tar.gz
+*.zip
+assets/build/
+!assets/build/.gitkeep

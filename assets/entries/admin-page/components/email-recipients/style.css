@@ -1,0 +1,9 @@
+.wmd-email-recipients {
+	display: grid;
+	grid-template: auto / min-content 1fr;
+	grid-gap: .5em;
+}
+
+.wmd-email-recipients dd {
+	margin: 0;
+}

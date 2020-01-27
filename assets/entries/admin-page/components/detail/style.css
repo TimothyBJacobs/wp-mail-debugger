@@ -1,0 +1,19 @@
+.wmd-detail-body {
+	max-width: 1100px;
+	margin: 1em auto 0;
+}
+
+.wmd-email-main {
+	float: left;
+	width: 100%;
+	max-width: 850px;
+	box-sizing: border-box;
+	padding-right: 2em;
+}
+
+.wmd-email-sidebar {
+	float: left;
+	width: 100%;
+	max-width: 250px;
+	box-sizing: border-box;
+}

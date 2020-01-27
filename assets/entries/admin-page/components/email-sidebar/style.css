@@ -1,0 +1,13 @@
+.wmd-email-sidebar-item {
+	color: #606a73;
+	margin-bottom: 2em;
+}
+
+.wmd-email-sidebar-item:last-child {
+	margin-bottom: 0;
+}
+
+.wmd-email-sidebar-item h3 {
+	margin: 0 0 .25em 0;
+	color: #555d66;
+}

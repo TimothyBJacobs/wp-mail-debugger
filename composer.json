@@ -1,0 +1,22 @@
+{
+  "name": "timothybjacobs/wp-mail-debugger",
+  "description": "Display emails sent through wp_mail() in the admin.",
+  "type": "wp-plugin",
+  "require": {
+    "pimple/pimple": "^3.2",
+    "psr/container": "^1.0"
+  },
+  "autoload": {
+    "psr-4": {
+      "TimothyBJacobs\\WPMailDebugger\\": "src/"
+    }
+  },
+  "license": "GPL-2.0-or-later",
+  "authors": [
+    {
+      "name": "Timothy Jacobs",
+      "email": "me@timothybjacobs.com"
+    }
+  ],
+  "minimum-stability": "stable"
+}

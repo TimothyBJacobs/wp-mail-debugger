@@ -1,0 +1,23 @@
+.wmd-email-sidebar-item--headers dl {
+	margin: 0;
+}
+
+.wmd-email-sidebar-item--headers dl:after {
+	content: '';
+	clear: both;
+	display: table;
+}
+
+.wmd-email-sidebar-item--headers dt,
+.wmd-email-sidebar-item--headers dd {
+	float: left;
+}
+
+.wmd-email-sidebar-item--headers dt {
+	margin-right: 5px;
+	clear: left;
+}
+
+.wmd-email-sidebar-item--headers dd {
+	margin: 0;
+}

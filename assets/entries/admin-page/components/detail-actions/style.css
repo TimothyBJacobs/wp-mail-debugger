@@ -1,0 +1,24 @@
+.wmd-detail-actions {
+	display: flex;
+	justify-content: space-between;
+}
+
+.wmd-detail-actions__container--left {
+	display: flex;
+}
+
+.wmd-detail-actions__container--right {
+	display: flex;
+	justify-content: flex-end;
+}
+
+.wmd-detail-actions--trash,
+.wmd-detail-actions--download {
+	flex-direction: row-reverse;
+}
+
+.wmd-detail-actions--trash .dashicon,
+.wmd-detail-actions--download .dashicon {
+	margin-right: 0 !important;
+	margin-left: 4px;
+}

@@ -1,0 +1,28 @@
+.wmd-email-list-item {
+	background: white;
+	padding: 1em;
+	margin-bottom: 1em;
+	border: 1px solid #e2e4e7;
+	display: grid;
+	grid-template-columns: repeat(12, 1fr);
+	grid-template-rows: min-content min-content;
+	grid-row-gap: 1em;
+}
+
+.wmd-email-list-item__subject {
+	margin: 0;
+	grid-column: 1 / 11;
+	grid-row: 1;
+}
+
+.wmd-email-list-item .wmd-sent-at {
+	grid-column: 11 / 13;
+	grid-row: 1;
+	text-align: right;
+}
+
+.wmd-email-list-item__to {
+	margin: 0;
+	grid-column: 1 / 7;
+	grid-row: 2;
+}
