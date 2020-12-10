@@ -77,7 +77,7 @@ final class WPAssetManager implements AssetManager, Runnable {
 				wp_set_script_translations( self::PREFIX . $entry, 'wp-mail-debugger' );
 			}
 
-			if ( file_exists( $this->assets_dir . "build/{$entry}.css" ) ) {
+			if ( file_exists( $this->assets_dir . "build/style-{$entry}.css" ) ) {
 				$style_deps = [];
 
 				// We need to manually enqueue the CSS for the components library.
@@ -87,7 +87,7 @@ final class WPAssetManager implements AssetManager, Runnable {
 
 				wp_register_style(
 					self::PREFIX . $entry,
-					plugins_url( "assets/build/{$entry}.css", $this->plugin_file ),
+					plugins_url( "assets/build/style-{$entry}.css", $this->plugin_file ),
 					$style_deps,
 					$asset['version']
 				);
