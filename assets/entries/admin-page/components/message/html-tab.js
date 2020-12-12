@@ -21,6 +21,11 @@ class HTMLTab extends Component {
 			this.setState( {
 				height: this.ref.contentWindow.document.body.scrollHeight,
 			} );
+
+			const links = this.ref.contentWindow.document.querySelectorAll( 'a' );
+			for ( const link of links ) {
+				link.setAttribute( 'target', '_blank' );
+			}
 		}
 	}
 
@@ -46,7 +51,7 @@ class HTMLTab extends Component {
 					onLoad={ this.onLoad }
 					ref={ this.onRef }
 					title={ __( 'Message Preview', 'wp-mail-debugger' ) }
-					sandbox="allow-same-origin"
+					sandbox="allow-same-origin allow-top-navigation-by-user-activation allow-popups"
 				/>
 			</div>
 		);
