@@ -10,6 +10,7 @@ import { useSelect, useDispatch } from '@wordpress/data';
  * Internal dependencies
  */
 import { CORE_STORE } from '../../../shared/constants';
+import './style.css';
 
 function Settings() {
 	const [ open, setOpen ] = useState();

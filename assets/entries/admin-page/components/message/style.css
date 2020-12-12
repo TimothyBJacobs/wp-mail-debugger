@@ -15,11 +15,6 @@
 	box-shadow: none;
 }
 
-.components-tab-panel__tabs button.is-active {
-	border-bottom: 3px solid #0081E3;
-	outline: none;
-}
-
 .wmd-message-tab--text {
 	background: white;
 	padding: 1.4em;

@@ -1,0 +1,5 @@
+.wmd-settings *,
+.wmd-settings *:before,
+.wmd-settings *:after {
+	box-sizing: border-box;
+}

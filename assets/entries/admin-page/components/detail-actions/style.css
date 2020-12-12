@@ -22,3 +22,7 @@
 	margin-right: 0 !important;
 	margin-left: 4px;
 }
+
+.wmd-detail-actions .components-button.is-link {
+	text-decoration: none;
+}
