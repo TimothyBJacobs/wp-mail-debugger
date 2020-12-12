@@ -3,8 +3,8 @@ declare( strict_types=1 );
 /**
  * Email entity.
  *
- * @author      Iron Bound Designs
  * @since       1.0
+ * @author      Iron Bound Designs
  * @copyright   2019 (c) Iron Bound Designs.
  * @license     GPLv2
  */
@@ -48,6 +48,9 @@ final class Email {
 	/** @var array */
 	private $meta;
 
+	/** @var int */
+	private $site_id;
+
 	/**
 	 * Email constructor.
 	 *
@@ -58,6 +61,7 @@ final class Email {
 	 * @param string            $message
 	 * @param string[]          $headers
 	 * @param array             $meta
+	 * @param int               $site_id
 	 */
 	public function __construct(
 		EmailUuid $uuid,
@@ -66,7 +70,8 @@ final class Email {
 		string $subject,
 		string $message,
 		array $headers,
-		array $meta = []
+		array $meta = [],
+		int $site_id = 0
 	) {
 		$this->uuid        = $uuid;
 		$this->sent_at     = $sent_at;
@@ -76,6 +81,7 @@ final class Email {
 		$this->raw_headers = $headers;
 		$this->headers     = $this->parse_headers( $headers );
 		$this->meta        = $meta;
+		$this->site_id     = $site_id;
 	}
 
 	/**
@@ -148,6 +154,15 @@ final class Email {
 	 */
 	public function get_raw_headers(): array {
 		return $this->raw_headers;
+	}
+
+	/**
+	 * Gets the site ID the email was sent from.
+	 *
+	 * @return int
+	 */
+	public function get_site_id(): int {
+		return $this->site_id;
 	}
 
 	/**

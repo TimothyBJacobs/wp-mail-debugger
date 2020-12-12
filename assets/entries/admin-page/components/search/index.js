@@ -4,12 +4,13 @@
 import { __ } from '@wordpress/i18n';
 import { IconButton, TextControl } from '@wordpress/components';
 import { useSelect, useDispatch } from '@wordpress/data';
-import { useState } from '@wordpress/element';
+import { useState, useContext } from '@wordpress/element';
 
 /**
  * Internal dependencies
  */
 import { CORE_STORE, ADMIN_PAGE_STORE } from '../../../shared/constants';
+import Context from '../../context';
 import './style.css';
 
 function Search() {
@@ -18,6 +19,8 @@ function Search() {
 	const isSearchEnabled = useSelect( ( select ) => select( ADMIN_PAGE_STORE ).isSearchEnabled() );
 	const { query } = useDispatch( CORE_STORE );
 	const { enableSearch, disableSearch } = useDispatch( ADMIN_PAGE_STORE );
+	const { isNetworkAdmin } = useContext( Context );
+
 	const search = ( e ) => {
 		e.preventDefault();
 
@@ -25,7 +28,7 @@ function Search() {
 			enableSearch();
 		}
 
-		query( 'search', { context: 'embed', search: searchTerm } );
+		query( 'search', { context: 'embed', search: searchTerm, global: isNetworkAdmin } );
 	};
 	const cancel = () => {
 		setSearchTerm( '' );

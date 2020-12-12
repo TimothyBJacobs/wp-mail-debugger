@@ -3,8 +3,8 @@ declare( strict_types=1 );
 /**
  * REST Emails Controller.
  *
- * @author      Iron Bound Designs
  * @since       1.0
+ * @author      Iron Bound Designs
  * @copyright   2019 (c) Iron Bound Designs.
  * @license     GPLv2
  */
@@ -76,6 +76,14 @@ final class EmailsController extends WP_REST_Controller implements Runnable {
 	}
 
 	public function get_items_permissions_check( $request ) {
+		if ( is_multisite() && $request['global'] && ! current_user_can( 'manage_network_options' ) ) {
+			return new WP_Error(
+				'rest_forbidden_param',
+				__( 'Sorry, you must be able to manage the network to see all network emails.' ),
+				[ 'status' => rest_authorization_required_code() ]
+			);
+		}
+
 		return current_user_can( 'manage_options' );
 	}
 
@@ -84,8 +92,14 @@ final class EmailsController extends WP_REST_Controller implements Runnable {
 		$per_page = (int) $request['per_page'];
 		$page     = (int) $request['page'];
 
+		if ( is_multisite() && $request['global'] ) {
+			$site_id = 0;
+		} else {
+			$site_id = get_current_blog_id();
+		}
+
 		$responses = [];
-		$emails    = $this->repository->list( $search, (int) $request['per_page'], (int) $request['page'] );
+		$emails    = $this->repository->list( $search, (int) $request['per_page'], (int) $request['page'], $site_id );
 
 		foreach ( $emails as $email ) {
 			$responses[] = $this->prepare_response_for_collection( $this->prepare_item_for_response( $email, $request ) );
@@ -106,10 +120,14 @@ final class EmailsController extends WP_REST_Controller implements Runnable {
 		$response->header( 'X-WP-Total', $emails->get_total_found() );
 		$response->header( 'X-WP-TotalPages', (int) $max_pages );
 
-		$base = add_query_arg(
-			urlencode_deep( $request->get_query_params() ),
-			rest_url( $this->namespace . '/' . $this->rest_base )
-		);
+		$query = $request->get_query_params();
+		array_walk( $query, static function ( &$value, $key ) {
+			if ( $key === 'global' ) {
+				$value = $value ? 'true' : 'false';
+			}
+		} );
+
+		$base = add_query_arg( urlencode_deep( $query ), rest_url( $this->namespace . '/' . $this->rest_base ) );
 
 		if ( $page > 1 ) {
 			$prev_page = min( $page - 1, $max_pages );
@@ -175,6 +193,7 @@ final class EmailsController extends WP_REST_Controller implements Runnable {
 
 		$data = [
 			'uuid'    => (string) $item->get_uuid(),
+			'site_id' => $item->get_site_id(),
 			'sent_at' => $item->get_sent_at()->format( \DateTimeInterface::ATOM ),
 			'subject' => $item->get_subject(),
 			'message' => $item->get_message(),
@@ -213,6 +232,19 @@ final class EmailsController extends WP_REST_Controller implements Runnable {
 		];
 	}
 
+	public function get_collection_params() {
+		$params = parent::get_collection_params();
+
+		if ( is_multisite() ) {
+			$params['global'] = [
+				'type'    => 'boolean',
+				'default' => false,
+			];
+		}
+
+		return $params;
+	}
+
 	public function get_item_schema() {
 		$address = [
 			'type'       => 'object',
@@ -237,6 +269,10 @@ final class EmailsController extends WP_REST_Controller implements Runnable {
 					'type'    => 'string',
 					'format'  => 'uuid',
 					'context' => [ 'view', 'embed', 'edit' ]
+				],
+				'site_id' => [
+					'type'    => 'integer',
+					'context' => [ 'view', 'embed', 'edit' ],
 				],
 				'sent_at' => [
 					'type'    => 'string',

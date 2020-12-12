@@ -6,9 +6,8 @@ import InfiniteScroll from 'react-infinite-scroll-component';
 /**
  * WordPress dependencies
  */
-import { withSelect, withDispatch } from '@wordpress/data';
-import { compose } from '@wordpress/compose';
-import { Fragment } from '@wordpress/element';
+import { useSelect, useDispatch } from '@wordpress/data';
+import { Fragment, useContext } from '@wordpress/element';
 
 /**
  * Internal dependencies
@@ -16,8 +15,20 @@ import { Fragment } from '@wordpress/element';
 import EmailListItem from '../email-list-item';
 import Search from '../search';
 import { CORE_STORE, ADMIN_PAGE_STORE } from '../../../shared/constants';
+import Context from '../../context';
 
-function EmailList( { emails, hasMore, fetchMore } ) {
+function EmailList() {
+	const { isNetworkAdmin } = useContext( Context );
+	const queryId = useSelect( ( select ) => select( ADMIN_PAGE_STORE ).getQueryId() );
+	const { emails, hasMore } = useSelect( ( select ) => {
+		return {
+			emails: ( queryId === 'main' ? select( ADMIN_PAGE_STORE ).getEmails( isNetworkAdmin ) : select( CORE_STORE ).getQueryResults( queryId ) ) || [],
+			hasMore: !! select( CORE_STORE ).getQueryHeaderLink( 'main', 'next' ),
+		};
+	}, [ queryId, isNetworkAdmin ] );
+	const fetchQueryNextPage = useDispatch( CORE_STORE ).fetchQueryNextPage;
+	const fetchMore = () => fetchQueryNextPage( queryId );
+
 	return (
 		<Fragment>
 			<Search />
@@ -32,25 +43,4 @@ function EmailList( { emails, hasMore, fetchMore } ) {
 	);
 }
 
-export default compose( [
-	withSelect( ( select ) => {
-		const queryId = select( ADMIN_PAGE_STORE ).getQueryId();
-		let emails;
-
-		if ( queryId === 'main' ) {
-			emails = select( ADMIN_PAGE_STORE ).getEmails();
-		} else {
-			emails = select( CORE_STORE ).getQueryResults( queryId );
-		}
-
-		return {
-			emails: emails || [],
-			hasMore: !! select( CORE_STORE ).getQueryHeaderLink( 'main', 'next' ),
-		};
-	} ),
-	withDispatch( ( dispatch ) => ( {
-		fetchMore() {
-			return dispatch( CORE_STORE ).fetchQueryNextPage( 'main' );
-		},
-	} ) ),
-] )( EmailList );
+export default EmailList;

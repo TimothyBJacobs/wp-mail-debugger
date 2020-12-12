@@ -3,8 +3,8 @@ declare( strict_types=1 );
 /**
  * Emails repository that persists entities to a custom table managed by wpdb.
  *
- * @author      Iron Bound Designs
  * @since       1.0
+ * @author      Iron Bound Designs
  * @copyright   2019 (c) Iron Bound Designs.
  * @license     GPLv2
  */
@@ -51,10 +51,9 @@ final class DBTableEmailsRepository implements EmailsRepository, Installable, Up
 				'sent_at'    => $email->get_sent_at()->format( 'Y-m-d H:i:s' ),
 				// This is not a good way to handle meta, we should actually setup a separate EAV table. But for now...
 				'meta'       => wp_json_encode( $email->get_all_meta() ),
+				'site_id'    => $email->get_site_id(),
 			]
 		);
-
-
 	}
 
 	public function find( EmailUuid $uuid ): Email {
@@ -71,7 +70,7 @@ final class DBTableEmailsRepository implements EmailsRepository, Installable, Up
 		return $this->hydrate( $row );
 	}
 
-	public function list( string $search = '', int $per_page = 100, int $page = 1 ): ResultSet {
+	public function list( string $search = '', int $per_page = 100, int $page = 1, int $site_id = 0 ): ResultSet {
 		if ( $page < 1 ) {
 			return new ResultSet( [], 0 );
 		}
@@ -79,27 +78,39 @@ final class DBTableEmailsRepository implements EmailsRepository, Installable, Up
 		$offset = ( $page - 1 ) * $per_page;
 		$tn     = $this->wpdb->base_prefix . self::TN;
 
+		$where   = [];
+		$prepare = [];
+
 		if ( $search ) {
-			$search      = '%' . $this->wpdb->esc_like( $search ) . '%';
-			$query       = $this->wpdb->prepare(
-				"SELECT * FROM {$tn} WHERE `subject` LIKE %s OR `message` LIKE %s ORDER BY `sent_at` DESC LIMIT {$offset}, {$per_page}",
-				$search,
-				$search
-			);
-			$count_query = $this->wpdb->prepare(
-				"SELECT count(`uuid`) FROM {$tn} WHERE `subject` LIKE %s OR `message` LIKE %s",
-				$search,
-				$search
-			);
-		} else {
-			$query       = "SELECT * FROM {$tn} ORDER BY `sent_at` DESC LIMIT {$offset}, {$per_page}";
-			$count_query = "SELECT count(`uuid`) FROM {$tn}";
+			$search    = '%' . $this->wpdb->esc_like( $search ) . '%';
+			$where[]   = '( `subject` LIKE %s OR `message` LIKE %s )';
+			$prepare[] = $search;
+			$prepare[] = $search;
 		}
 
-		$rows  = $this->wpdb->get_results( $query, ARRAY_A );
+		if ( $site_id ) {
+			$where[] = '`site_id` = %d';
+			$prepare[]      = $site_id;
+		}
+
+		if ( $where ) {
+			$where_clause = 'WHERE ' . implode( ' AND ', $where );
+		} else {
+			$where_clause = '';
+		}
+
+		$items_query = "SELECT * FROM {$tn} {$where_clause} ORDER BY `sent_at` DESC LIMIT {$offset}, {$per_page}";
+		$count_query = "SELECT count(`uuid`) FROM {$tn} {$where_clause}";
+
+		if ( $prepare ) {
+			$items_query = $this->wpdb->prepare( $items_query, $prepare );
+			$count_query = $this->wpdb->prepare( $count_query, $prepare );
+		}
+
+		$rows  = $this->wpdb->get_results( $items_query, ARRAY_A );
 		$total = (int) $this->wpdb->get_var( $count_query );
 
-		$items = array_map( \Closure::fromCallable( [ $this, 'hydrate' ] ), $rows );
+		$items = array_map( [ $this, 'hydrate' ], $rows );
 
 		return new ResultSet( $items, $total );
 	}
@@ -126,7 +137,8 @@ final class DBTableEmailsRepository implements EmailsRepository, Installable, Up
 			$data['subject'],
 			$data['message'],
 			json_decode( $data['headers'], true ),
-			$data['meta'] ? (array) json_decode( $data['meta'], true ) : []
+			$data['meta'] ? (array) json_decode( $data['meta'], true ) : [],
+			(int) $data['site_id']
 		);
 	}
 
@@ -154,6 +166,13 @@ SQL
 				$tn = $this->wpdb->base_prefix . self::TN;
 				$this->wpdb->query( "ALTER TABLE {$tn} ADD COLUMN meta TEXT" );
 				break;
+			case 3:
+				$tn = $this->wpdb->base_prefix . self::TN;
+				$this->wpdb->query( "ALTER TABLE {$tn} ADD COLUMN site_id BIGINT(20) NOT NULL" );
+
+				if ( ! is_multisite() ) {
+					$this->wpdb->update( $tn, [ 'site_id' => 1 ], [ 'site_id' => 0 ] );
+				}
 		}
 	}
 

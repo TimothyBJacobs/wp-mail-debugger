@@ -8,6 +8,6 @@ import { dispatch } from '@wordpress/data-controls';
  */
 import { CORE_STORE } from '../../shared/constants';
 
-export function *getEmails() {
-	yield dispatch( CORE_STORE, 'query', 'main', { context: 'embed' } );
+export function *getEmails( isNetworkAdmin ) {
+	yield dispatch( CORE_STORE, 'query', 'main', { context: 'embed', global: isNetworkAdmin } );
 }

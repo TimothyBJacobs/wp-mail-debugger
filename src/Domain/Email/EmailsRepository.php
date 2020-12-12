@@ -37,10 +37,11 @@ interface EmailsRepository {
 	 * @param string $search   Search term.
 	 * @param int    $per_page Number of records to return per-page.
 	 * @param int    $page     The page to iterate from.
+	 * @param int    $site_id  The site to include emails from. Pass 0 to query all sites.
 	 *
 	 * @return ResultSet
 	 */
-	public function list( string $search = '', int $per_page = 100, int $page = 1 ): ResultSet;
+	public function list( string $search = '', int $per_page = 100, int $page = 1, int $site_id = 0 ): ResultSet;
 
 	/**
 	 * Delete an email.

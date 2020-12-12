@@ -16,7 +16,7 @@ use TimothyBJacobs\WPMailDebugger\Infrastructure\VersionManager\VersionManager;
 
 final class Plugin {
 
-	public const BUILD = 2;
+	public const BUILD = 3;
 
 	/** @var VersionManager */
 	private $version_manager;

@@ -63,7 +63,9 @@ final class WPMailListener implements Runnable {
 				array_map( [ Address::class, 'from_line' ], $to ),
 				(string) ( $args['subject'] ?? '' ),
 				(string) ( $args['message'] ?? '' ),
-				$headers
+				$headers,
+				[],
+				get_current_blog_id()
 			);
 
 			/**
