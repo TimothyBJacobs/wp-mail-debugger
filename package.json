@@ -15,9 +15,7 @@
     "@wordpress/i18n": "*",
     "@wordpress/plugins": "^2.6.0",
     "@wordpress/scripts": "^12.5.0",
-    "@wordpress/url": "^2.7.0",
-    "autoprefixer": "^9.4.7",
-    "node-sass": "^4.13.1"
+    "@wordpress/url": "^2.7.0"
   },
   "scripts": {
     "build": "wp-scripts build assets/entries/admin-page.js assets/entries/store.js --output-path=assets/build",
