@@ -29,10 +29,31 @@ final class AdminPage implements Runnable {
 	}
 
 	public function run(): void {
+		add_filter( 'plugin_row_meta', \Closure::fromCallable( [ $this, 'add_row_meta' ] ), 10, 2 );
+
 		add_action( 'network_admin_menu', \Closure::fromCallable( [ $this, 'register_network_menu' ] ) );
 		add_action( 'admin_menu', \Closure::fromCallable( [ $this, 'register_menu' ] ) );
 
 		add_action( 'admin_enqueue_scripts', \Closure::fromCallable( [ $this, 'enqueue' ] ) );
+	}
+
+	private function add_row_meta( $meta, $file ): array {
+		if ( 'wp-mail-debugger/wp-mail-debugger.php' === $file ) {
+			$meta[] = sprintf(
+				'<a href="%s" id="wmd-mac-link">%s</a>
+<script type="application/javascript">
+if ( navigator.platform !== "MacIntel" ) {
+	var wmdMacLink = document.getElementById("wmd-mac-link");
+	wmdMacLink.previousSibling.remove();
+	wmdMacLink.remove();
+}
+</script>',
+				'https://apps.apple.com/us/app/wp-mail-debugger/id1547093438?mt=12',
+				__( 'Get the Mac App' )
+			);
+		}
+
+		return $meta;
 	}
 
 	private function register_menu(): void {
