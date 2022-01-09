@@ -49,7 +49,7 @@ if ( navigator.platform !== "MacIntel" ) {
 }
 </script>',
 				'https://apps.apple.com/us/app/wp-mail-debugger/id1547093438?mt=12',
-				__( 'Get the Mac App' )
+				__( 'Get the Mac App', 'wp-mail-debugger' )
 			);
 		}
 
@@ -58,8 +58,8 @@ if ( navigator.platform !== "MacIntel" ) {
 
 	private function register_menu(): void {
 		add_management_page(
-			__( 'WP Mail Debugger' ),
-			__( 'WP Mail Debugger' ),
+			__( 'WP Mail Debugger', 'wp-mail-debugger' ),
+			__( 'WP Mail Debugger', 'wp-mail-debugger' ),
 			'manage_options',
 			'wp-mail-debugger',
 			\Closure::fromCallable( [ $this, 'render' ] )
@@ -69,8 +69,8 @@ if ( navigator.platform !== "MacIntel" ) {
 	private function register_network_menu(): void {
 		add_submenu_page(
 			'settings.php',
-			__( 'WP Mail Debugger' ),
-			__( 'WP Mail Debugger' ),
+			__( 'WP Mail Debugger', 'wp-mail-debugger' ),
+			__( 'WP Mail Debugger', 'wp-mail-debugger' ),
 			'manage_network_options',
 			'wp-mail-debugger',
 			\Closure::fromCallable( [ $this, 'render' ] )
