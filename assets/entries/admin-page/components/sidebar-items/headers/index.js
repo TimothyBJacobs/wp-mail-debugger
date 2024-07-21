@@ -1,7 +1,7 @@
 /**
  * External dependencies
  */
-import { map } from 'lodash';
+import { map, isEmpty } from 'lodash';
 
 /**
  * WordPress dependencies
@@ -16,6 +16,10 @@ import SidebarItem from '../../sidebar-item';
 import './style.css';
 
 export default function Headers( { email } ) {
+	if ( isEmpty( email.headers ) ) {
+		return null;
+	}
+
 	return (
 		<SidebarItem
 			title={ __( 'Headers', 'wp-mail-debugger' ) }

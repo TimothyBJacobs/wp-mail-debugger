@@ -1,0 +1,7 @@
+.wmd-email-sidebar-item--errors .components-notice__content {
+	color: #1d2327;
+}
+
+.wmd-email-sidebar-item--errors .components-notice + .components-notice {
+	margin-top: 0.5em;
+}
