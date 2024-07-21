@@ -79,7 +79,7 @@ final class EmailsController extends WP_REST_Controller implements Runnable {
 		if ( is_multisite() && $request['global'] && ! current_user_can( 'manage_network_options' ) ) {
 			return new WP_Error(
 				'rest_forbidden_param',
-				__( 'Sorry, you must be able to manage the network to see all network emails.' ),
+				__( 'Sorry, you must be able to manage the network to see all network emails.', 'wp-mail-debugger' ),
 				[ 'status' => rest_authorization_required_code() ]
 			);
 		}
@@ -112,7 +112,7 @@ final class EmailsController extends WP_REST_Controller implements Runnable {
 		if ( $page > $max_pages && $emails->get_total_found() ) {
 			return new WP_Error(
 				'rest_post_invalid_page_number',
-				__( 'The page number requested is larger than the number of pages available.' ),
+				__( 'The page number requested is larger than the number of pages available.', 'wp-mail-debugger' ),
 				[ 'status' => 400 ]
 			);
 		}
