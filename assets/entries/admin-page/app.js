@@ -25,8 +25,17 @@ function App( { currentEmail } ) {
 	return (
 		<SlotFillProvider>
 			<Header />
-			<div className={ classnames( 'wmd-body', currentEmail ? 'wmd-body--detail' : 'wmd-body--list' ) }>
-				{ currentEmail ? <Detail id={ currentEmail } /> : <EmailList /> }
+			<div
+				className={ classnames(
+					'wmd-body',
+					currentEmail ? 'wmd-body--detail' : 'wmd-body--list'
+				) }
+			>
+				{ currentEmail ? (
+					<Detail id={ currentEmail } />
+				) : (
+					<EmailList />
+				) }
 			</div>
 			<PluginArea />
 		</SlotFillProvider>

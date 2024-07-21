@@ -53,4 +53,6 @@ export function getQueryId( state ) {
  *
  * @return {Array<Object>} List of email objects.
  */
-export const getEmails = createRegistrySelector( ( select ) => () => select( CORE_STORE ).getQueryResults( 'main' ) );
+export const getEmails = createRegistrySelector(
+	( select ) => () => select( CORE_STORE ).getQueryResults( 'main' )
+);

@@ -19,20 +19,36 @@ import Context from '../../context';
 
 function EmailList() {
 	const { isNetworkAdmin } = useContext( Context );
-	const queryId = useSelect( ( select ) => select( ADMIN_PAGE_STORE ).getQueryId() );
-	const { emails, hasMore } = useSelect( ( select ) => {
-		return {
-			emails: ( queryId === 'main' ? select( ADMIN_PAGE_STORE ).getEmails( isNetworkAdmin ) : select( CORE_STORE ).getQueryResults( queryId ) ) || [],
-			hasMore: !! select( CORE_STORE ).getQueryHeaderLink( 'main', 'next' ),
-		};
-	}, [ queryId, isNetworkAdmin ] );
+	const queryId = useSelect( ( select ) =>
+		select( ADMIN_PAGE_STORE ).getQueryId()
+	);
+	const { emails, hasMore } = useSelect(
+		( select ) => {
+			return {
+				emails:
+					( queryId === 'main'
+						? select( ADMIN_PAGE_STORE ).getEmails( isNetworkAdmin )
+						: select( CORE_STORE ).getQueryResults( queryId ) ) ||
+					[],
+				hasMore: !! select( CORE_STORE ).getQueryHeaderLink(
+					'main',
+					'next'
+				),
+			};
+		},
+		[ queryId, isNetworkAdmin ]
+	);
 	const fetchQueryNextPage = useDispatch( CORE_STORE ).fetchQueryNextPage;
 	const fetchMore = () => fetchQueryNextPage( queryId );
 
 	return (
 		<Fragment>
 			<Search />
-			<InfiniteScroll dataLength={ emails.length } next={ fetchMore } hasMore={ hasMore }>
+			<InfiniteScroll
+				dataLength={ emails.length }
+				next={ fetchMore }
+				hasMore={ hasMore }
+			>
 				<ul>
 					{ emails.map( ( email ) => (
 						<EmailListItem email={ email } key={ email.uuid } />

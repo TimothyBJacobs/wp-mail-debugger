@@ -13,15 +13,31 @@ import { ADMIN_PAGE_STORE, CORE_STORE } from '../../../shared/constants';
 import Settings from '../settings';
 import './style.css';
 
-function Header( { queryId, refresh, isRefreshing, emptyInbox, isEmptyingInbox, numFound } ) {
+function Header( {
+	queryId,
+	refresh,
+	isRefreshing,
+	emptyInbox,
+	isEmptyingInbox,
+	numFound,
+} ) {
 	return (
 		<div className="wmd-header">
 			<div className="wmd-header__actions">
 				<div className="wmd-header__actions-container--left">
-					<Button icon="update" onClick={ refresh } isBusy={ isRefreshing } disabled={ queryId !== 'main' }>
+					<Button
+						icon="update"
+						onClick={ refresh }
+						isBusy={ isRefreshing }
+						disabled={ queryId !== 'main' }
+					>
 						{ __( 'Refresh', 'wp-mail-debugger' ) }
 					</Button>
-					<Button icon="trash" onClick={ emptyInbox } isBusy={ isEmptyingInbox }>
+					<Button
+						icon="trash"
+						onClick={ emptyInbox }
+						isBusy={ isEmptyingInbox }
+					>
 						{ __( 'Empty Inbox', 'wp-mail-debugger' ) }
 					</Button>
 				</div>
@@ -31,7 +47,9 @@ function Header( { queryId, refresh, isRefreshing, emptyInbox, isEmptyingInbox, 
 			</div>
 			<div className="wmd-header__title">
 				<h1>{ __( 'WP Mail Debugger', 'wp-mail-debugger' ) }</h1>
-				<span className="wmd-header__title-found-count">{ numFound }</span>
+				<span className="wmd-header__title-found-count">
+					{ numFound }
+				</span>
 			</div>
 		</div>
 	);
@@ -40,7 +58,10 @@ function Header( { queryId, refresh, isRefreshing, emptyInbox, isEmptyingInbox, 
 export default compose( [
 	withSelect( ( select ) => ( {
 		queryId: select( ADMIN_PAGE_STORE ).getQueryId(),
-		numFound: select( CORE_STORE ).getQueryHeader( select( ADMIN_PAGE_STORE ).getQueryId(), 'x-wp-total' ),
+		numFound: select( CORE_STORE ).getQueryHeader(
+			select( ADMIN_PAGE_STORE ).getQueryId(),
+			'x-wp-total'
+		),
 		isRefreshing: select( CORE_STORE ).isQuerying( 'main' ),
 		isEmptyingInbox: select( CORE_STORE ).isEmptyingInbox(),
 	} ) ),

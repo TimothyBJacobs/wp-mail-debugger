@@ -1,7 +1,12 @@
 /**
  * Internal dependencies
  */
-import { ENABLE_SEARCH, DISABLE_SEARCH, VIEW_EMAIL, VIEW_LIST } from './actions';
+import {
+	ENABLE_SEARCH,
+	DISABLE_SEARCH,
+	VIEW_EMAIL,
+	VIEW_LIST,
+} from './actions';
 
 const DEFAULT_STATE = {
 	currentEmail: '',

@@ -22,7 +22,8 @@ class HTMLTab extends Component {
 				height: this.ref.contentWindow.document.body.scrollHeight,
 			} );
 
-			const links = this.ref.contentWindow.document.querySelectorAll( 'a' );
+			const links =
+				this.ref.contentWindow.document.querySelectorAll( 'a' );
 			for ( const link of links ) {
 				link.setAttribute( 'target', '_blank' );
 			}

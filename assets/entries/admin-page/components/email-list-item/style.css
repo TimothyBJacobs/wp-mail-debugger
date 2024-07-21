@@ -15,6 +15,11 @@
 	grid-row: 1;
 }
 
+.wmd-email-list-item__subject .components-button {
+	font-size: 16px;
+	font-weight: 600;
+}
+
 .wmd-email-list-item .wmd-sent-at {
 	grid-column: 11 / 13;
 	grid-row: 1;

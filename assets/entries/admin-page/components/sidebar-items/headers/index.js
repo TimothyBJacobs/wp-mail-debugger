@@ -17,7 +17,10 @@ import './style.css';
 
 export default function Headers( { email } ) {
 	return (
-		<SidebarItem title={ __( 'Headers', 'wp-mail-debugger' ) } slug="headers">
+		<SidebarItem
+			title={ __( 'Headers', 'wp-mail-debugger' ) }
+			slug="headers"
+		>
 			<dl>
 				{ map( email.headers, ( value, header ) => (
 					<Fragment key={ header }>

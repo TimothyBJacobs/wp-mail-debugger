@@ -15,7 +15,8 @@
     "@wordpress/i18n": "^4.51.1",
     "@wordpress/plugins": "^6.19.6",
     "@wordpress/scripts": "^27.2.6",
-    "@wordpress/url": "^3.52.1"
+    "@wordpress/url": "^3.52.1",
+    "lodash": "^4.17.21"
   },
   "scripts": {
     "build": "wp-scripts build assets/entries/admin-page.js assets/entries/store.js --output-path=assets/build",

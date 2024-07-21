@@ -15,8 +15,12 @@ import './style.css';
 
 function Search() {
 	const [ searchTerm, setSearchTerm ] = useState( '' );
-	const isSearching = useSelect( ( select ) => select( CORE_STORE ).isQuerying( 'search' ) );
-	const isSearchEnabled = useSelect( ( select ) => select( ADMIN_PAGE_STORE ).isSearchEnabled() );
+	const isSearching = useSelect( ( select ) =>
+		select( CORE_STORE ).isQuerying( 'search' )
+	);
+	const isSearchEnabled = useSelect( ( select ) =>
+		select( ADMIN_PAGE_STORE ).isSearchEnabled()
+	);
 	const { query } = useDispatch( CORE_STORE );
 	const { enableSearch, disableSearch } = useDispatch( ADMIN_PAGE_STORE );
 	const { isNetworkAdmin } = useContext( Context );
@@ -28,7 +32,11 @@ function Search() {
 			enableSearch();
 		}
 
-		query( 'search', { context: 'embed', search: searchTerm, global: isNetworkAdmin } );
+		query( 'search', {
+			context: 'embed',
+			search: searchTerm,
+			global: isNetworkAdmin,
+		} );
 	};
 	const cancel = () => {
 		setSearchTerm( '' );

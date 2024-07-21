@@ -7,7 +7,7 @@ import { get, find } from 'lodash';
 /**
  * Gets the items returned by a query.
  *
- * @param {Object} state State object.
+ * @param {Object} state   State object.
  * @param {string} queryId Query id.
  * @return {Array<Object>}
  */
@@ -36,9 +36,9 @@ export const getQueryResults = createSelector(
 /**
  * Gets the link header from a query result.
  *
- * @param {Object} state State object.
+ * @param {Object} state   State object.
  * @param {string} queryId Query id.
- * @param {string} rel Rel to search for.
+ * @param {string} rel     Rel to search for.
  * @return {{link: string, rel: string}} Link object or undefined if not found.
  */
 export function getQueryHeaderLink( state, queryId, rel ) {
@@ -48,9 +48,9 @@ export function getQueryHeaderLink( state, queryId, rel ) {
 /**
  * Get a response header from a query.
  *
- * @param {Object} state State object.
+ * @param {Object} state   State object.
  * @param {string} queryId Query id.
- * @param {string} header Normalized header name.
+ * @param {string} header  Normalized header name.
  * @return {string|undefined} The header value, or undefined if it does not exist.
  */
 export function getQueryHeader( state, queryId, header ) {
@@ -60,8 +60,8 @@ export function getQueryHeader( state, queryId, header ) {
 /**
  * Get an email object.
  *
- * @param {Object} state The state object.
- * @param {string} id The email id.
+ * @param {Object} state   The state object.
+ * @param {string} id      The email id.
  * @param {string} context The context to request the item with. Defaults to view.
  * @return {Object|undefined} The email object or undefined if it could not be found.
  */
@@ -88,7 +88,7 @@ export function getSettings( state ) {
 /**
  * Checks if a query is in progress.
  *
- * @param {Object} state The state object.
+ * @param {Object} state   The state object.
  * @param {string} queryId The query id.
  * @return {boolean} Whether the query is in progress.
  */
@@ -100,7 +100,7 @@ export function isQuerying( state, queryId ) {
  * Checks if an email is being fetched.
  *
  * @param {Object} state The state object.
- * @param {string} id The email id.
+ * @param {string} id    The email id.
  * @return {boolean} Whether the query is in progress.
  */
 export function isFetching( state, id ) {
@@ -111,7 +111,7 @@ export function isFetching( state, id ) {
  * Checks if an email is being deleted.
  *
  * @param {Object} state The state object.
- * @param {string} id The email id.
+ * @param {string} id    The email id.
  * @return {boolean} Whether the query is in progress.
  */
 export function isDeleting( state, id ) {

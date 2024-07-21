@@ -3,6 +3,7 @@
  */
 import { withDispatch } from '@wordpress/data';
 import { compose } from '@wordpress/compose';
+import { Button } from '@wordpress/components';
 
 /**
  * Internal dependencies
@@ -16,9 +17,9 @@ function EmailListItem( { email, view } ) {
 	return (
 		<li className="wmd-email-list-item">
 			<h3 className="wmd-email-list-item__subject">
-				<a href="#" onClick={ view }>
+				<Button variant="link" onClick={ view }>
 					{ email.subject }
-				</a>
+				</Button>
 			</h3>
 
 			<SentAt email={ email } />
@@ -32,7 +33,9 @@ function EmailListItem( { email, view } ) {
 export default compose( [
 	withDispatch( ( dispatch, ownProps ) => ( {
 		view() {
-			return dispatch( ADMIN_PAGE_STORE ).viewEmail( ownProps.email.uuid );
+			return dispatch( ADMIN_PAGE_STORE ).viewEmail(
+				ownProps.email.uuid
+			);
 		},
 	} ) ),
 ] )( EmailListItem );

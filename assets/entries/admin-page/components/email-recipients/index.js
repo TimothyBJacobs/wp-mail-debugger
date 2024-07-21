@@ -30,9 +30,24 @@ export default function EmailRecipients( { email, className } ) {
 
 	return (
 		<dl className={ classnames( 'wmd-email-recipients', className ) }>
-			{ to.length > 0 && <AddressList label={ __( 'To:', 'wp-mail-debugger' ) } addresses={ to } /> }
-			{ cc.length > 0 && <AddressList label={ __( 'Cc:', 'wp-mail-debugger' ) } addresses={ cc } /> }
-			{ bcc.length > 0 && <AddressList label={ __( 'Bcc:', 'wp-mail-debugger' ) } addresses={ bcc } /> }
+			{ to.length > 0 && (
+				<AddressList
+					label={ __( 'To:', 'wp-mail-debugger' ) }
+					addresses={ to }
+				/>
+			) }
+			{ cc.length > 0 && (
+				<AddressList
+					label={ __( 'Cc:', 'wp-mail-debugger' ) }
+					addresses={ cc }
+				/>
+			) }
+			{ bcc.length > 0 && (
+				<AddressList
+					label={ __( 'Bcc:', 'wp-mail-debugger' ) }
+					addresses={ bcc }
+				/>
+			) }
 		</dl>
 	);
 }

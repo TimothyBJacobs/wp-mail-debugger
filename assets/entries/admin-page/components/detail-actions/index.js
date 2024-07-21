@@ -21,8 +21,12 @@ function DetailActions( { viewList, deleteEmail, isDeleting } ) {
 				</Button>
 			</div>
 			<div className="wmd-detail-actions__container--right">
-				<Button icon="trash" className="wmd-detail-actions--trash" onClick={ deleteEmail }
-					isBusy={ isDeleting }>
+				<Button
+					icon="trash"
+					className="wmd-detail-actions--trash"
+					onClick={ deleteEmail }
+					isBusy={ isDeleting }
+				>
 					{ __( 'Delete', 'wp-mail-debugger' ) }
 				</Button>
 			</div>
@@ -37,7 +41,8 @@ export default compose( [
 	withDispatch( ( dispatch, { email } ) => ( {
 		viewList: dispatch( ADMIN_PAGE_STORE ).viewList,
 		deleteEmail() {
-			return dispatch( CORE_STORE ).deleteEmail( email.uuid )
+			return dispatch( CORE_STORE )
+				.deleteEmail( email.uuid )
 				.then( () => dispatch( ADMIN_PAGE_STORE ).viewList() );
 		},
 	} ) ),

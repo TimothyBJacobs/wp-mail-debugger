@@ -18,7 +18,10 @@ import './style.css';
 const getTabs = memize( ( email ) => {
 	const tabs = [];
 
-	if ( email.headers[ 'Content-Type' ] && email.headers[ 'Content-Type' ].includes( 'text/html' ) ) {
+	if (
+		email.headers[ 'Content-Type' ] &&
+		email.headers[ 'Content-Type' ].includes( 'text/html' )
+	) {
 		tabs.push( {
 			name: 'html',
 			title: __( 'HTML', 'wp-mail-debugger' ),
@@ -37,26 +40,18 @@ const getTabs = memize( ( email ) => {
 
 function renderTab( tab ) {
 	if ( tab.name === 'html' ) {
-		return (
-			<HTMLTab email={ tab.email } />
-		);
+		return <HTMLTab email={ tab.email } />;
 	}
 
 	return (
 		<div className="wmd-message-tab wmd-message-tab--text">
-			<pre>
-				{ tab.email.message.trim() }
-			</pre>
+			<pre>{ tab.email.message.trim() }</pre>
 		</div>
 	);
 }
 
 function Message( { email } ) {
-	return (
-		<TabPanel tabs={ getTabs( email ) }>
-			{ renderTab }
-		</TabPanel>
-	);
+	return <TabPanel tabs={ getTabs( email ) }>{ renderTab }</TabPanel>;
 }
 
 export default Message;
