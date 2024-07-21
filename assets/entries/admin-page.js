@@ -2,7 +2,7 @@
  * WordPress dependencies
  */
 import { setLocaleData } from '@wordpress/i18n';
-import { render } from '@wordpress/element';
+import { createRoot } from '@wordpress/element';
 import domReady from '@wordpress/dom-ready';
 
 setLocaleData( { '': {} }, 'wp-mail-debugger' );
@@ -17,7 +17,12 @@ domReady( () => {
 	const containerEl = document.getElementById( 'wp-mail-debugger-root' );
 	const isNetworkAdmin = containerEl.dataset[ 'is-network-admin' ] === '1';
 
-	return render( <Context.Provider value={ { isNetworkAdmin } }><App /></Context.Provider>, containerEl );
+	const root = createRoot( containerEl );
+	root.render(
+		<Context.Provider value={ { isNetworkAdmin } }>
+			<App />
+		</Context.Provider>
+	);
 } );
 
 export * from './admin-page/api';
