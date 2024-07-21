@@ -14,7 +14,7 @@
     "@wordpress/element": "^2.7.0",
     "@wordpress/i18n": "*",
     "@wordpress/plugins": "^2.6.0",
-    "@wordpress/scripts": "^12.5.0",
+    "@wordpress/scripts": "^28.3.0",
     "@wordpress/url": "^2.7.0"
   },
   "scripts": {
