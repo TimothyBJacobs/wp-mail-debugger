@@ -2,7 +2,7 @@
  * WordPress dependencies
  */
 import { __ } from '@wordpress/i18n';
-import { IconButton } from '@wordpress/components';
+import { Button } from '@wordpress/components';
 import { compose } from '@wordpress/compose';
 import { withSelect, withDispatch } from '@wordpress/data';
 
@@ -18,12 +18,12 @@ function Header( { queryId, refresh, isRefreshing, emptyInbox, isEmptyingInbox, 
 		<div className="wmd-header">
 			<div className="wmd-header__actions">
 				<div className="wmd-header__actions-container--left">
-					<IconButton icon="update" onClick={ refresh } isBusy={ isRefreshing } disabled={ queryId !== 'main' }>
+					<Button icon="update" onClick={ refresh } isBusy={ isRefreshing } disabled={ queryId !== 'main' }>
 						{ __( 'Refresh', 'wp-mail-debugger' ) }
-					</IconButton>
-					<IconButton icon="trash" onClick={ emptyInbox } isBusy={ isEmptyingInbox }>
+					</Button>
+					<Button icon="trash" onClick={ emptyInbox } isBusy={ isEmptyingInbox }>
 						{ __( 'Empty Inbox', 'wp-mail-debugger' ) }
-					</IconButton>
+					</Button>
 				</div>
 				<div className="wmd-header__actions-container--right">
 					<Settings />

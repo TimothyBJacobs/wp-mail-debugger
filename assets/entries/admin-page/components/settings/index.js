@@ -2,7 +2,7 @@
  * WordPress dependencies
  */
 import { useState } from '@wordpress/element';
-import { IconButton, Popover, RadioControl } from '@wordpress/components';
+import { Button, Popover, RadioControl } from '@wordpress/components';
 import { __ } from '@wordpress/i18n';
 import { useSelect, useDispatch } from '@wordpress/data';
 
@@ -19,10 +19,10 @@ function Settings() {
 
 	return (
 		<>
-			<IconButton icon="admin-settings" className="wmd-header__actions--settings"
+			<Button icon="admin-settings" className="wmd-header__actions--settings"
 				onClick={ () => setOpen( ! open ) }>
 				{ __( 'Settings', 'wp-mail-debugger' ) }
-			</IconButton>
+			</Button>
 			{ open && (
 				<Popover position="bottom" headerTitle={ __( 'Edit Settings', 'wp-mail-debugger' ) } expandOnMobile
 					onClickOutside={ () => setOpen( false ) } onClose={ () => setOpen( false ) }>

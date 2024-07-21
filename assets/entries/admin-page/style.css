@@ -13,7 +13,7 @@
 	max-width: none;
 }
 
-.components-icon-button.is-link:hover {
+.components-button.has-icon.is-link:hover {
 	background-color: transparent !important;
 	color: #00a0d2 !important;
 	box-shadow: none !important;

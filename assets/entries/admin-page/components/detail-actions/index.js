@@ -1,7 +1,7 @@
 /**
  * WordPress dependencies
  */
-import { IconButton } from '@wordpress/components';
+import { Button } from '@wordpress/components';
 import { compose } from '@wordpress/compose';
 import { withSelect, withDispatch } from '@wordpress/data';
 import { __ } from '@wordpress/i18n';
@@ -16,15 +16,15 @@ function DetailActions( { viewList, deleteEmail, isDeleting } ) {
 	return (
 		<div className="wmd-detail-actions">
 			<div className="wmd-detail-actions__container--left">
-				<IconButton isLink icon="arrow-left-alt2" onClick={ viewList }>
+				<Button isLink icon="arrow-left-alt2" onClick={ viewList }>
 					{ __( 'Back to Messages', 'wp-mail-debugger' ) }
-				</IconButton>
+				</Button>
 			</div>
 			<div className="wmd-detail-actions__container--right">
-				<IconButton icon="trash" className="wmd-detail-actions--trash" onClick={ deleteEmail }
+				<Button icon="trash" className="wmd-detail-actions--trash" onClick={ deleteEmail }
 					isBusy={ isDeleting }>
 					{ __( 'Delete', 'wp-mail-debugger' ) }
-				</IconButton>
+				</Button>
 			</div>
 		</div>
 	);

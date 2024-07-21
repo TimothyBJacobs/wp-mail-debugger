@@ -2,7 +2,7 @@
  * WordPress dependencies
  */
 import { __ } from '@wordpress/i18n';
-import { IconButton, TextControl } from '@wordpress/components';
+import { Button, TextControl } from '@wordpress/components';
 import { useSelect, useDispatch } from '@wordpress/data';
 import { useState, useContext } from '@wordpress/element';
 
@@ -43,14 +43,14 @@ function Search() {
 				className="wmd-search__control"
 				placeholder={ __( 'Search', 'LION' ) }
 			/>
-			<IconButton
+			<Button
 				icon="search"
 				type="submit"
 				isBusy={ isSearching }
 				className="wmd-search__trigger"
 				disabled={ searchTerm.length === 0 }
 			/>
-			<IconButton
+			<Button
 				icon="no-alt"
 				className="wmd-search__trigger"
 				onClick={ cancel }
