@@ -1,7 +1,8 @@
 /**
  * WordPress dependencies
  */
-import { apiFetch, select } from '@wordpress/data-controls';
+import { controls } from '@wordpress/data';
+import { apiFetch } from '@wordpress/data-controls';
 import { addQueryArgs, getQueryArg } from '@wordpress/url';
 
 /**
@@ -29,14 +30,25 @@ export function* query( queryId, queryParams ) {
 		return error;
 	}
 
-	yield receiveQuery( queryId, queryParams.context || 'view', response, items, 'replace' );
+	yield receiveQuery(
+		queryId,
+		queryParams.context || 'view',
+		response,
+		items,
+		'replace'
+	);
 	yield { type: FINISH_QUERY, queryId, queryParams, response };
 
 	return response;
 }
 
 export function* fetchQueryNextPage( queryId, mode = 'append' ) {
-	const link = yield select( CORE_STORE, 'getQueryHeaderLink', queryId, 'next' );
+	const link = yield controls.select(
+		CORE_STORE,
+		'getQueryHeaderLink',
+		queryId,
+		'next'
+	);
 
 	if ( ! link ) {
 		return [];

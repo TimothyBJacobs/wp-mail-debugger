@@ -1,13 +1,16 @@
 /**
  * WordPress dependencies
  */
-import { dispatch } from '@wordpress/data-controls';
+import { controls } from '@wordpress/data';
 
 /**
  * Internal dependencies
  */
 import { CORE_STORE } from '../../shared/constants';
 
-export function *getEmails( isNetworkAdmin ) {
-	yield dispatch( CORE_STORE, 'query', 'main', { context: 'embed', global: isNetworkAdmin } );
+export function* getEmails( isNetworkAdmin ) {
+	yield controls.dispatch( CORE_STORE, 'query', 'main', {
+		context: 'embed',
+		global: isNetworkAdmin,
+	} );
 }

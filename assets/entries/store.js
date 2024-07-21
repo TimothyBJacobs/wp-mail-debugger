@@ -1,7 +1,7 @@
 /**
  * WordPress dependencies
  */
-import { registerStore } from '@wordpress/data';
+import { register, createReduxStore } from '@wordpress/data';
 import { controls as dataControls } from '@wordpress/data-controls';
 
 /**
@@ -14,13 +14,15 @@ import * as selectors from './store/selectors';
 import * as resolvers from './store/resolvers';
 import { CORE_STORE } from './shared/constants';
 
-registerStore( CORE_STORE, {
-	controls: {
-		...dataControls,
-		...controls,
-	},
-	actions,
-	selectors,
-	resolvers,
-	reducer,
-} );
+register(
+	createReduxStore( CORE_STORE, {
+		controls: {
+			...controls,
+			...dataControls,
+		},
+		actions,
+		selectors,
+		resolvers,
+		reducer,
+	} )
+);
