@@ -39,7 +39,8 @@ return [
 
 	App\REST\EmailsController::class => static function ( Container $c ) {
 		return new App\REST\EmailsController(
-			$c[ Domain\Email\EmailsRepository::class ]
+			$c[ Domain\Email\EmailsRepository::class ],
+			$c[ Domain\Send\Sender::class ]
 		);
 	},
 
@@ -49,10 +50,18 @@ return [
 		return $c[ Infrastructure\Email\DBTableEmailsRepository::class ];
 	},
 
+	Domain\Send\Sender::class => static function ( Container $c ) {
+		return $c[ Infrastructure\Send\WPMailSender::class ];
+	},
+
 	/* Infrastructure */
 
 	Infrastructure\Email\DBTableEmailsRepository::class => static function ( Container $c ) {
 		return new Infrastructure\Email\DBTableEmailsRepository( $GLOBALS['wpdb'] );
+	},
+
+	Infrastructure\Send\WPMailSender::class => static function () {
+		return new Infrastructure\Send\WPMailSender();
 	},
 
 	Infrastructure\VersionManager\VersionManager::class => static function ( Container $c ) {

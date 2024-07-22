@@ -23,6 +23,9 @@ import {
 	RECEIVE_EMAIL,
 	RECEIVE_QUERY,
 	RECEIVE_SETTINGS,
+	START_SEND_EMAIL,
+	FINISH_SEND_EMAIL,
+	FAILED_SEND_EMAIL,
 } from './actions';
 
 const DEFAULT_STATE = {
@@ -36,6 +39,8 @@ const DEFAULT_STATE = {
 	fetching: [],
 	// List of email ids of items that are being deleted
 	deleting: [],
+	// List of email ids of items that are being sent
+	sending: [],
 	// Is the inbox currently being updated
 	emptyingInbox: false,
 	// Settings object
@@ -135,6 +140,17 @@ export default function reducer( state = DEFAULT_STATE, action ) {
 			return {
 				...state,
 				fetching: state.fetching.filter( ( id ) => id !== action.id ),
+			};
+		case START_SEND_EMAIL:
+			return {
+				...state,
+				sending: [ ...state.sending, action.id ],
+			};
+		case FINISH_SEND_EMAIL:
+		case FAILED_SEND_EMAIL:
+			return {
+				...state,
+				sending: state.sending.filter( ( id ) => id !== action.id ),
 			};
 		case START_DELETE_EMAIL:
 			return {

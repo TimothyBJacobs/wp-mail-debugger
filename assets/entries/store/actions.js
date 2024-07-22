@@ -96,6 +96,27 @@ export function* fetchEmail( id, context = 'view' ) {
 	yield { type: FINISH_FETCH_EMAIL, id, email };
 }
 
+export function* sendEmail( id, to ) {
+	yield { type: START_SEND_EMAIL, id };
+
+	try {
+		yield apiFetch( {
+			path: `wp-mail-debugger/v1/emails/${ id }/send`,
+			method: 'POST',
+			data: { to },
+		} );
+	} catch ( error ) {
+		yield { type: FAILED_SEND_EMAIL, id, error };
+
+		return error;
+	}
+
+	yield { type: FINISH_SEND_EMAIL, id };
+	yield controls.dispatch( CORE_STORE, 'query', 'main', {
+		context: 'embed',
+	} );
+}
+
 export function* deleteEmail( id ) {
 	yield { type: START_DELETE_EMAIL, id };
 
@@ -188,3 +209,7 @@ export const FAILED_EMPTY_INBOX = 'FAILED_EMPTY_INBOX';
 export const START_FETCH_EMAIL = 'START_FETCH_EMAIL';
 export const FINISH_FETCH_EMAIL = 'FINISH_FETCH_EMAIL';
 export const FAILED_FETCH_EMAIL = 'FAILED_FETCH_EMAIL';
+
+export const START_SEND_EMAIL = 'START_SEND_EMAIL';
+export const FINISH_SEND_EMAIL = 'FINISH_SEND_EMAIL';
+export const FAILED_SEND_EMAIL = 'FAILED_SEND_EMAIL';

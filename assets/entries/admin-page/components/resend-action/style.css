@@ -1,0 +1,10 @@
+.wmd-resend *,
+.wmd-resend *:before,
+.wmd-resend *:after {
+	box-sizing: border-box;
+}
+
+.wmd-resend {
+	min-width: 350px;
+	padding: 1em;
+}

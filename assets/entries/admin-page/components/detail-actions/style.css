@@ -13,12 +13,14 @@
 }
 
 .wmd-detail-actions--trash,
-.wmd-detail-actions--download {
+.wmd-detail-actions--download,
+.wmd-detail-actions--send {
 	flex-direction: row-reverse;
 }
 
 .wmd-detail-actions--trash .dashicon,
-.wmd-detail-actions--download .dashicon {
+.wmd-detail-actions--download .dashicon,
+.wmd-detail-actions--send .dashicon {
 	margin-right: 0 !important;
 	margin-left: 4px;
 }

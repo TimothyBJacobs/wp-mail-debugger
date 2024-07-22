@@ -108,6 +108,16 @@ export function isFetching( state, id ) {
 }
 
 /**
+ * Checks if an email is being sent.
+ * @param {Object} state The state object.
+ * @param {string} id    The email id
+ * @return {boolean} Whether the email is being sent.
+ */
+export function isSending( state, id ) {
+	return state.sending.includes( id );
+}
+
+/**
  * Checks if an email is being deleted.
  *
  * @param {Object} state The state object.

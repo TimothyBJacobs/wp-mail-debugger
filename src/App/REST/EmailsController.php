@@ -17,6 +17,7 @@ use TimothyBJacobs\WPMailDebugger\Domain\Email\EmailNotFound;
 use TimothyBJacobs\WPMailDebugger\Domain\Email\EmailsRepository;
 use TimothyBJacobs\WPMailDebugger\Domain\Email\EmailUuid;
 use TimothyBJacobs\WPMailDebugger\Domain\Email\InvalidUuid;
+use TimothyBJacobs\WPMailDebugger\Domain\Send\Sender;
 use TimothyBJacobs\WPMailDebugger\Infrastructure\Runnable;
 use WP_Error;
 use WP_Http;
@@ -28,13 +29,17 @@ final class EmailsController extends WP_REST_Controller implements Runnable {
 	/** @var EmailsRepository */
 	private $repository;
 
+	/** @var Sender */
+	private $sender;
+
 	/**
 	 * EmailsController constructor.
 	 *
 	 * @param EmailsRepository $repository
 	 */
-	public function __construct( EmailsRepository $repository ) {
+	public function __construct( EmailsRepository $repository, Sender $sender ) {
 		$this->repository = $repository;
+		$this->sender     = $sender;
 		$this->namespace  = 'wp-mail-debugger/v1';
 		$this->rest_base  = 'emails';
 	}
@@ -71,6 +76,25 @@ final class EmailsController extends WP_REST_Controller implements Runnable {
 				'callback'            => [ $this, 'delete_item' ],
 				'permission_callback' => [ $this, 'delete_item_permissions_check' ],
 				'args'                => [],
+			],
+		] );
+
+
+		register_rest_route( $this->namespace, $this->rest_base . '/(?P<uuid>[\w\-]+)/send', [
+			[
+				'methods'             => WP_REST_Server::CREATABLE,
+				'callback'            => [ $this, 'send_item' ],
+				'permission_callback' => [ $this, 'send_item_permissions_check' ],
+				'args'                => [
+					'to' => [
+						'type'    => 'array',
+						'items'   => [
+							'type'   => 'string',
+							'format' => 'email',
+						],
+						'default' => [],
+					],
+				],
 			],
 		] );
 	}
@@ -182,6 +206,22 @@ final class EmailsController extends WP_REST_Controller implements Runnable {
 		} catch ( InvalidUuid $e ) {
 			return new WP_Error( 'rest_invalid_email_uuid', $e->getMessage(), [ 'status' => WP_Http::BAD_REQUEST ] );
 		}
+
+		return new \WP_REST_Response( null, WP_Http::NO_CONTENT );
+	}
+
+	public function send_item_permissions_check( \WP_REST_Request $request ): bool {
+		return current_user_can( 'manage_options' );
+	}
+
+	public function send_item( \WP_REST_Request $request ) {
+		try {
+			$email = $this->repository->find( new EmailUuid( (string) $request['uuid'] ) );
+		} catch ( InvalidUuid $e ) {
+			return new WP_Error( 'rest_invalid_email_uuid', $e->getMessage(), [ 'status' => WP_Http::NOT_FOUND ] );
+		}
+
+		$this->sender->send( $email, $request['to'] );
 
 		return new \WP_REST_Response( null, WP_Http::NO_CONTENT );
 	}

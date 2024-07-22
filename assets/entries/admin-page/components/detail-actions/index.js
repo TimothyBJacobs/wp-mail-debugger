@@ -10,9 +10,10 @@ import { __ } from '@wordpress/i18n';
  * Internal dependencies
  */
 import { ADMIN_PAGE_STORE, CORE_STORE } from '../../../shared/constants';
+import ResendAction from '../resend-action';
 import './style.css';
 
-function DetailActions( { viewList, deleteEmail, isDeleting } ) {
+function DetailActions( { viewList, email, deleteEmail, isDeleting } ) {
 	return (
 		<div className="wmd-detail-actions">
 			<div className="wmd-detail-actions__container--left">
@@ -21,6 +22,7 @@ function DetailActions( { viewList, deleteEmail, isDeleting } ) {
 				</Button>
 			</div>
 			<div className="wmd-detail-actions__container--right">
+				<ResendAction email={ email } />
 				<Button
 					icon="trash"
 					className="wmd-detail-actions--trash"
