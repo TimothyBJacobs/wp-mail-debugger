@@ -4,12 +4,12 @@ declare( strict_types=1 );
  * Plugin Name: WP Mail Debugger
  * Plugin URI: https://wpmaildebugger.com
  * Description: Capture and display all email sent through wp_mail().
- * Version: 1.0
+ * Version: 1.1
  * Text Domain: wp-mail-debugger
  * Author: Timothy Jacobs
  * Author URI: https://timothybjacobs.com
  * Requires PHP: 7.2.0
- * Requires at least: 5.3.0
+ * Requires at least: 6.3.0
  * Network: true
  */
 namespace TimothyBJacobs\WPMailDebugger;
